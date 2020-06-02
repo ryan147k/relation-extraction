@@ -170,11 +170,14 @@ def predict(**kwargs):
     opt.parse(kwargs)
 
     # 加载词向量
-    print("Loading word vectors...Please wait.")
+    print("\n\nLoading word vectors...Please wait.")
+    start = time.time()
     vector = KeyedVectors.load_word2vec_format(
         os.path.join(os.path.dirname(os.path.realpath(opt.train_data_root)), 'vector.txt')
     )
     print("Successfully loaded word vectors.")
+    cost = int(time.time()) - int(start)
+    print(f"Cost {int(cost/60)}min{cost%60}s.")
 
     # 模型
     model = getattr(models, opt.model)(input_size=vector.vector_size+2, output_size=opt.class_num)
@@ -187,7 +190,7 @@ def predict(**kwargs):
     while True:
 
         # 数据
-        company_pair = input("Please input a pair of companies(separate them with a space):\n")
+        company_pair = input("\nPlease input a pair of companies(separate them with a space):\n")
         
         if company_pair == '':
             print("See you next time!")

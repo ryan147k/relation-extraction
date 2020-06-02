@@ -17,7 +17,7 @@ class DefaultConfig():
     # 模型参数
     env = 'default'
     model = 'BiLSTM'
-    load_model_path = None # 加载预训练的模型的路径，为None代表不加载
+    load_model_path = './checkpoints/BiLSTM_0504_11h01m03s.pth' # 加载预训练的模型的路径，为None代表不加载
 
     # 训练参数
     max_epoch = 50
@@ -53,7 +53,10 @@ def parse(self, kwargs):
     print('user config:')
     for k, v in self.__class__.__dict__.items():
         if not k.startswith('__'):
-            print(k, getattr(self, k))
+            attr = getattr(self, k)
+            for _ in range(20 - len(k)):
+                k += ' '
+            print(f"{k}\t{attr}")
 
 
 DefaultConfig.parse = parse
